@@ -1,3 +1,4 @@
+using backend.Endpoints;
 using HowlDev.Web.Authentication.AccountAuth;
 using HowlDev.Web.Authentication.Middleware;
 
@@ -12,14 +13,16 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseAccountIdentityMiddleware(MiddlewareLocation.Headers, options => {
-    options.Paths = ["/api/health"];
+    options.Paths = ["/api/health", "/api/user/signin"];
     options.Whitelist = "/api";
 });
 app.UseRouting();
 
 app.MapGet("/api/health", () => "Healthy!");
 
-app.Map("/api/{*rest}", (string rest) => Results.NotFound());
+app.MapAuthEndpoints();
+
+app.Map("/api/{*_}", (string? _) => Results.NotFound());
 
 app.MapFallbackToFile("index.html");
 

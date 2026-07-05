@@ -1,0 +1,2 @@
+insert into "HowlDev.User" (id, accountName, passHash, role) values 
+  ('1d2053b6-fc67-491a-aa14-76ae12d4c7f7', 'Cody', '$argon2id$m=131072,t=2,p=4$3vgFhbmx+YAv9IFWQ4VE9Q==$+ukYzY6kTQjg4pUgGeJ+BA0NRdUUaQu4HLcoUDllW6w=', 1);

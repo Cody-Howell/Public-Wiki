@@ -1,0 +1,30 @@
+@api = https://localhost:7085
+# @api = https://localhost:5000
+@user = Cody
+@key = z9XGiCL25cZQKKFI0h7v
+
+###
+GET {{api}}/api/health
+###
+POST {{api}}/api/user/signin
+Content-Type: application/json
+
+{
+    "username": "Cody", 
+    "password": "password"
+}
+###
+GET {{api}}/api/user/valid
+Account-Auth-Account: {{user}}
+Account-Auth-ApiKey: {{key}}
+###
+POST {{api}}/api/user/changepw
+Account-Auth-Account: {{user}}
+Account-Auth-ApiKey: {{key}}
+Content-Type: application/json
+
+{
+    "username": "Cody", 
+    "password": "123456"
+}
+###
