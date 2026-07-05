@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16
+    container_name: public_wiki_postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: 123456abc
+      POSTGRES_USER: admin
+      POSTGRES_DB: public-wiki
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+    # command: ["postgres", "-c", "log_statement=all"] # Enables verbose logging
+
+  api:
+    container_name: public_wiki
+    build:
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__PostgresConnection=Host=db;Database=public-wiki;Username=admin;Password=123456abc;
+    ports:
+      - 5000:8080
+    depends_on:
+      - db
