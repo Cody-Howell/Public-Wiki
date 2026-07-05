@@ -1,0 +1,7 @@
+@api = https://localhost:7085
+
+###
+GET {{api}}/api/health
+###
+GET {{api}}/
+###
