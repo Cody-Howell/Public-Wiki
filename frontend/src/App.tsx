@@ -1,20 +1,16 @@
-import { getResponse } from "./api/fetchHelpers";
+import { BrowserRouter, Route, Routes } from "react-router";
+import { AuthProvider } from "./context/auth/AuthProvider";
+import { SignInPage } from "./pages/SignInPage";
 
 function App() {
   return (
-    <div>
-      <p>Here is is!</p>
-      <button
-        onClick={async () => {
-          console.log(await getResponse("/", {
-            username: "",
-            key: ""
-          }));
-        }}
-      >
-        Run call
-      </button>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/signin" element={<SignInPage />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

@@ -1,3 +1,5 @@
+import { AuthError } from "../types/AuthError";
+
 export interface ApiResponse {
   code: number;
   response: string;
@@ -14,14 +16,14 @@ async function request(
   method: "GET" | "POST" | "PATCH" | "PUT" | "DELETE",
   path: string,
   auth: Auth,
-  body?: object, 
-  basePath?: string
+  body?: object,
+  basePath?: string,
 ) {
   const startUrl = basePath ?? baseUrl;
   const fullUrl = startUrl + path;
-  
-  console.log(`[REQUEST START] ${method} ${fullUrl}`, body ? { body } : '');
-  
+
+  console.log(`[REQUEST START] ${method} ${fullUrl}`, body ? { body } : "");
+
   try {
     const headers: Record<string, string> = {};
 
@@ -42,9 +44,14 @@ async function request(
 
     const text = await response.text();
 
+    if (response.status === 401) {
+      throw new AuthError();
+    }
+
     return { code: response.status, response: text };
   } catch (error) {
-     if (error instanceof Error ) {
+    if (error instanceof AuthError) throw error;
+    if (error instanceof Error) {
       console.error(`Network error: ${error.message}`);
       throw error;
     } else {
@@ -56,7 +63,7 @@ async function request(
 
 export async function getResponse(
   path: string,
-  auth: Auth, 
+  auth: Auth,
   basePath?: string,
 ): Promise<ApiResponse> {
   return request("GET", path, auth, undefined, basePath);
@@ -65,7 +72,7 @@ export async function getResponse(
 export async function postResponse(
   path: string,
   auth: Auth,
-  body?: object, 
+  body?: object,
   basePath?: string,
 ): Promise<ApiResponse> {
   return request("POST", path, auth, body, basePath);
@@ -74,7 +81,7 @@ export async function postResponse(
 export async function patchResponse(
   path: string,
   auth: Auth,
-  body?: object, 
+  body?: object,
   basePath?: string,
 ): Promise<ApiResponse> {
   return request("PATCH", path, auth, body, basePath);
@@ -91,7 +98,7 @@ export async function putResponse(
 
 export async function deleteResponse(
   path: string,
-  auth: Auth, 
+  auth: Auth,
   basePath?: string,
 ): Promise<ApiResponse> {
   return request("DELETE", path, auth, undefined, basePath);
