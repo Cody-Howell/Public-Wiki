@@ -4,7 +4,7 @@
 @key = z9XGiCL25cZQKKFI0h7v
 
 ###
-GET {{api}}/api/health
+GET {{api}}/api
 ###
 POST {{api}}/api/user/signin
 Content-Type: application/json

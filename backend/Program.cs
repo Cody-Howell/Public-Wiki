@@ -18,7 +18,7 @@ app.UseAccountIdentityMiddleware(MiddlewareLocation.Headers, options => {
 });
 app.UseRouting();
 
-app.MapGet("/api/health", () => "Healthy!");
+app.MapGet("/api", () => "Healthy!");
 
 app.MapAuthEndpoints();
 

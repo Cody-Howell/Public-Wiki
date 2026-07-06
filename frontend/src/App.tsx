@@ -6,7 +6,10 @@ function App() {
       <p>Here is is!</p>
       <button
         onClick={async () => {
-          console.log(await getResponse("/"));
+          console.log(await getResponse("/", {
+            username: "",
+            key: ""
+          }));
         }}
       >
         Run call
